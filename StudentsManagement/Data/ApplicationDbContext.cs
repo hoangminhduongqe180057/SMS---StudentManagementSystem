@@ -25,18 +25,23 @@ namespace StudentsManagement.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            // Configure the relationship for CreatedBy in ApplicationRole
+            modelBuilder.Entity<ApplicationRole>()
+                .HasOne(role => role.CreatedBy)
+                .WithMany()
+                .HasForeignKey(role => role.CreatedById)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ApplicationRole>()
+                .HasOne(role => role.ReviewedBy)
+                .WithMany()
+                .HasForeignKey(role => role.ReviewedById)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasOne(u => u.Gender)
                 .WithMany()
                 .HasForeignKey(u => u.GenderId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Configure the RoleId foreign key without cascade delete
-            modelBuilder.Entity<ApplicationUser>()
-                .HasOne(u => u.Role)// Configure the GenderId foreign key without cascade delete
-                .WithMany()
-                .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

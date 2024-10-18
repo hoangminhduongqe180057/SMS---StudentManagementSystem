@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Students Management System</title>
 
-    @if (!NavigationManager.Uri.Contains("/Account/Login"))
+    @if (!NavigationManager.Uri.Contains("/Account/Login") || !NavigationManager.Uri.Contains("/Account/Register"))
     {
         <!-- Load AdminLTE styles only for non-login pages -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -35,7 +35,7 @@
 
     <script src="_framework/blazor.web.js"></script>
 
-    @if (!NavigationManager.Uri.Contains("/Account/Login"))
+    @if (!NavigationManager.Uri.Contains("/Account/Login") || !NavigationManager.Uri.Contains("/Account/Register"))
     {
         <!-- Load AdminLTE scripts only for non-login pages -->
         <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
@@ -56,7 +56,18 @@
 @code {
     private string GetBodyClass()
     {
-        // Set different body class for the login page and the rest of the app
-        return NavigationManager.Uri.Contains("/Account/Login") ? "img js-fullheight" : "hold-transition sidebar-mini layout-fixed";
+        // Check if the URL contains "/Account/Login" specifically, apply the class only for the login page.
+        if (NavigationManager.Uri.Contains("/Account/Login"))
+        {
+            return "img js-fullheight";
+        }
+
+        if (NavigationManager.Uri.Contains("/Account/Register"))
+        {
+            return "";
+        }
+
+        // For other pages, including the register page, keep the default body class
+        return "hold-transition sidebar-mini layout-fixed";
     }
 }

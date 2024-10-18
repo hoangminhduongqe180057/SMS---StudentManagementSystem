@@ -15,6 +15,7 @@
 
   <ItemGroup>
 	  <ProjectReference Include="..\StudentsManagement.Shared\StudentsManagement.Shared.csproj" />
+	  
   </ItemGroup>
 
 </Project>

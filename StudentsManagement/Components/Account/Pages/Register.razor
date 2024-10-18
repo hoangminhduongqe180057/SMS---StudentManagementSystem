@@ -1,5 +1,5 @@
 ﻿@page "/Account/Register"
-
+@layout RegisterLayout
 @using System.ComponentModel.DataAnnotations
 @using System.Text
 @using System.Text.Encodings.Web
@@ -7,8 +7,13 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using StudentsManagement.Client.Services
 @using StudentsManagement.Data
+@using StudentsManagement.Services
 @using StudentsManagement.Shared.Models
+@using Microsoft.EntityFrameworkCore
+@using StudentsManagement.Components.Layout
 
+@inject NavigationManager navigation;
+@inject IConfiguration config
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
 @inject SignInManager<ApplicationUser> SignInManager
@@ -17,82 +22,135 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject SystemCodeDetailService SystemCodeDetailService
+@inject ApplicationDbContext _context
+<!--  UserManager<ApplicationUser> _userManager -->
+@inject RoleManager<ApplicationRole> roleManager
+@inject SystemCodeDetailRepository systemCodeDetailRepository
 
-<PageTitle>Register</PageTitle>
+<section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card-body p-md-5 text-black">
+                                <h3 class="mb-5 text-uppercase text-dark">Administrator registration form</h3>
 
-<h1>Register</h1>
+                                @if (!string.IsNullOrEmpty(Message))
+                                {
+                                    <StatusMessage Message="@Message" />
+                                }
 
-<div class="row">
-    <div class="col-md-4">
-        @if (!string.IsNullOrEmpty(Message))
-        {
-            <StatusMessage Message="@Message" />
-        }
-        <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
-            <DataAnnotationsValidator />
-            <h2>Create a new account.</h2>
-            <hr />
-            <ValidationSummary class="text-danger" role="alert" />
-            <div class="form-floating mb-3">
-                <label for="FirstName">First Name</label>
-                <InputText @bind-Value="Input.FirstName" class="form-control" autocomplete="FirstName" aria-required="true" />
-                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+                                <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
+                                    <DataAnnotationsValidator />
+                                    <ValidationSummary class="text-danger" role="alert" />
+
+                                    <div class="row">
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1m">First Name</label>
+                                                <InputText @bind-Value="Input.FirstName" id="form3Example1m" class="form-control form-control-lg" />
+                                                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1n">Middle Name</label>
+                                                <InputText @bind-Value="Input.MiddleName" id="form3Example1n" class="form-control form-control-lg" />
+                                                <ValidationMessage For="() => Input.MiddleName" class="text-danger" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form3Example1n">Last Name</label>
+                                                <InputText @bind-Value="Input.LastName" id="form3Example1n" class="form-control form-control-lg" />
+                                                <ValidationMessage For="() => Input.LastName" class="text-danger" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example8">Phone Number</label>
+                                        <InputText @bind-Value="Input.PhoneNumber" id="form3Example8" class="form-control form-control-lg" />
+                                        <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label">Role</label>
+                                            <InputSelect for="RoleId" @bind-Value="Input.RoleId" class="form-select form-control-lg">
+                                                <option value="">Select Role</option>
+                                                @if (Roles != null && Roles.Any())
+                                                {
+                                                    @foreach (var role in Roles)
+                                                    {
+                                                        <option value="@role.Id">@role.Code</option>
+                                                    }
+                                                }
+                                            </InputSelect>
+                                            <ValidationMessage For="() => Input.RoleId" class="text-danger" />
+                                        </div>
+
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label">Gender</label>
+                                            <InputSelect for="GenderId" @bind-Value="Input.GenderId" class="form-select form-control-lg">
+                                                <option value="">Select Gender</option>
+                                                @if (Gender != null && Gender.Any())
+                                                {
+                                                    @foreach (var gender in Gender)
+                                                    {
+                                                        <option value="@gender.Id">@gender.Description</option>
+                                                    }
+                                                }
+                                            </InputSelect>
+                                            <ValidationMessage For="() => Input.GenderId" class="text-danger" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="Photo">Photo</label>
+                                        <InputFile OnChange="@LoadUpLoadFile" accept=".jpg,.png,.jpeg" class="form-control form-control-lg" />
+                                        <ValidationMessage For="() => Input.Photo" class="text-danger" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example90">Email</label>
+                                        <InputText type="Email" @bind-Value="Input.Email" id="form3Example90" class="form-control form-control-lg" />
+                                        <ValidationMessage For="() => Input.Email" class="text-danger" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example99">Password</label>
+                                        <InputText type="password" @bind-Value="Input.Password" id="form3Example99" class="form-control form-control-lg" />
+                                        <ValidationMessage For="() => Input.Password" class="text-danger" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example97">Confirm Password</label>
+                                        <InputText type="password" @bind-Value="Input.ConfirmPassword" id="form3Example97" class="form-control form-control-lg" />
+                                        <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                                    </div>
+
+                                    <div class="d-flex justify-content-end pt-3">
+                                        <button type="button" class="btn btn-light btn-lg">Reset All</button>
+                                        <button type="submit" class="btn btn-warning btn-lg ms-2">Submit Form</button>
+                                    </div>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <label for="MiddleName">Middle Name</label>
-                <InputText @bind-Value="Input.MiddleName" class="form-control" autocomplete="MiddleName" aria-required="true" />
-                <ValidationMessage For="() => Input.MiddleName" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <label for="LastName">Last Name</label>
-                <InputText @bind-Value="Input.LastName" class="form-control" autocomplete="LastName" aria-required="true" />
-                <ValidationMessage For="() => Input.LastName" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <label for="Photo">User Photo</label>
-                <InputFile @bind-Value="Input.Photo" class="form-control" autocomplete="Photo" aria-required="true" />
-                <ValidationMessage For="() => Input.Photo" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <label class="control-label">Gender</label>
-                <InputSelect for="GenderId" class="form-control" @bind-Value="Input.GenderId">
-                    <option value="">Select Gender</option>
-                    @if (Gender != null && Gender.Any())
-                    {
-                        @foreach (var sex in Gender)
-                        {
-                            <option value="@sex.Id">@sex.Description</option>
-                        }
-                    }
-                </InputSelect>
-                <ValidationMessage For="()=>Input.GenderId" />
-            </div>
-            <div class="form-floating mb-3">
-                <label for="Email">Email</label>
-                <InputText type="Email" @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="email@gmail.com" />
-                <ValidationMessage For="() => Input.Email" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <label for="password">Password</label>
-                <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <ValidationMessage For="() => Input.Password" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <label for="confirm-password">Confirm Password</label>
-                <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </EditForm>
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            <ExternalLoginPicker />
-        </section>
-    </div>
-</div>
+</section>
+
 
 @code {
     private IEnumerable<IdentityError>? identityErrors;
@@ -109,6 +167,8 @@
     {
         var user = CreateUser();
 
+        // Set basic user properties
+        user.UserName = Input.Email;
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -116,40 +176,117 @@
         user.FirstName = Input.FirstName;
         user.MiddleName = Input.MiddleName;
         user.LastName = Input.LastName;
-        user.Photo = Input.Photo; 
+        user.Photo = await UpLoadFile();
         user.GenderId = Input.GenderId;
+        user.PhoneNumber = Input.PhoneNumber;
         user.LastActivityDate = DateTime.Now;
         user.IsActive = true;
-        user.RoleId = "C0C12ADE-7019-419F-9E11-6405738C9794";
 
-        var result = await UserManager.CreateAsync(user, Input.Password);
+        Logger.LogInformation($"Registering user with email {user.Email}");
 
-        if (!result.Succeeded)
+        // Create user
+        var createUserResult = await UserManager.CreateAsync(user, Input.Password);
+
+        if (!createUserResult.Succeeded)
         {
-            identityErrors = result.Errors;
+            Logger.LogError($"Failed to create user {user.Email}: {string.Join(", ", createUserResult.Errors.Select(e => e.Description))}");
+            identityErrors = createUserResult.Errors;
             return;
         }
 
-        Logger.LogInformation("User created a new account with password.");
+        Logger.LogInformation($"User {user.Email} created successfully.");
 
-        var userId = await UserManager.GetUserIdAsync(user);
+        // Lấy SystemCodeDetail dựa trên RoleId
+        var systemCodeDetail = await _context.SystemCodeDetails
+                                             .Where(s => s.Code == Input.RoleId || s.Id.ToString() == Input.RoleId)
+                                             .FirstOrDefaultAsync();
+
+        if (systemCodeDetail != null)
+        {
+            Logger.LogInformation($"Found SystemCodeDetail with Id: {systemCodeDetail.Id} and Code: {systemCodeDetail.Code}");
+
+            try
+            {
+                // Đảm bảo rằng vai trò tồn tại trong hệ thống
+                await systemCodeDetailRepository.EnsureRoleExistsFromSystemCode(roleManager, systemCodeDetail.Id);
+
+                // Tìm vai trò trong bảng AspNetRoles
+                var applicationRole = await roleManager.FindByNameAsync(systemCodeDetail.Code);
+
+                if (applicationRole != null)
+                {
+                    Logger.LogInformation($"Role found: {applicationRole.Name}");
+                    // Gán vai trò cho người dùng
+                    var roleAssignResult = await UserManager.AddToRoleAsync(user, applicationRole.Name);
+                    if (!roleAssignResult.Succeeded)
+                    {
+                        Logger.LogError($"Failed to assign role {applicationRole.Name} to user {user.Email}: {string.Join(", ", roleAssignResult.Errors.Select(e => e.Description))}");
+                        identityErrors = roleAssignResult.Errors;
+                        return;
+                    }
+
+                    Logger.LogInformation($"User {user.Email} assigned to role {applicationRole.Name} successfully.");
+                }
+                else
+                {
+                    Logger.LogWarning($"Role with Code {systemCodeDetail.Code} not found after ensuring it exists.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"An error occurred while ensuring role exists and assigning it: {ex.Message}");
+                throw; // Re-throw the exception if you want to propagate it further.
+            }
+        }
+        else
+        {
+            Logger.LogWarning($"SystemCodeDetail with Code or Id {Input.RoleId} not found.");
+        }
+
+        // Continue with email confirmation
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
         var callbackUrl = NavigationManager.GetUriWithQueryParameters(
             NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-            new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
+            new Dictionary<string, object?> { ["userId"] = user.Id, ["code"] = code, ["returnUrl"] = ReturnUrl });
 
         await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
 
         if (UserManager.Options.SignIn.RequireConfirmedAccount)
         {
-            RedirectManager.RedirectTo(
-                "Account/RegisterConfirmation",
-                new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
+            RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
         }
 
         await SignInManager.SignInAsync(user, isPersistent: false);
         RedirectManager.RedirectTo(ReturnUrl);
+    }
+
+    public IBrowserFile? file;
+    private async Task LoadUpLoadFile(InputFileChangeEventArgs erg)
+    {
+        file = erg.File;
+    }
+
+    private async Task<string> UpLoadFile()
+    {
+        if (file is null)
+        {
+            return string.Empty;
+        }
+        else
+        {
+            string filename = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(file.Name));
+            string path = Path.Combine(config.GetValue<String>("FileUploads")!, "user", filename);
+
+            string relativepath = Path.Combine("user", filename);
+
+            Directory.CreateDirectory(Path.Combine(config.GetValue<string>("FileUploads")!, "user"));
+
+            await using FileStream filestream = new(path, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(filestream);
+            return relativepath;
+        }
+
     }
 
     private ApplicationUser CreateUser()
@@ -220,15 +357,21 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+        [Required]
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; } = "";
     }
 
     List<SystemCodeDetail> Gender = new List<SystemCodeDetail>();
+    List<SystemCodeDetail> Roles = new List<SystemCodeDetail>();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Gender = await SystemCodeDetailService.GetByCodeAsync("Gender");
+            Roles = await SystemCodeDetailService.GetByCodeAsync("UserRoles");
 
             if (Gender == null || !Gender.Any())
             {

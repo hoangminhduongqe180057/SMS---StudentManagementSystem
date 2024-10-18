@@ -48,16 +48,16 @@
                             </div>
                         </div>
                         <div class="social d-flex justify-content-center text-center">
-                            <a href="Account/ForgotPassword" class="px-2 py-2 mr-md-1 rounded">Forgot your password?</a>
+                            <a href="/Account/ForgotPassword" class="px-2 py-2 mr-md-1 rounded">Forgot your password?</a>
                         </div>
                         <hr />
 
                         <div class="social d-flex justify-content-center text-center">
-                            <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))" class=" px-2 py-2 mr-md-1 rounded">Register as a new user</a>
+                            <a href="@(NavigationManager.GetUriWithQueryParameters("/Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))" class=" px-2 py-2 mr-md-1 rounded">Register as a new user</a>
                         </div>
                         <hr />
                         <div class="social d-flex justify-content-center text-center">
-                            <a href="Account/ResendEmailConfirmation" class="px-2 py-2 mr-md-1 rounded">Resend email confirmation</a>
+                            <a href="/Account/ResendEmailConfirmation" class="px-2 py-2 mr-md-1 rounded">Resend email confirmation</a>
                         </div>
 
                     </div>

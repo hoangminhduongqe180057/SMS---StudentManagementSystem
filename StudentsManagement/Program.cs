@@ -12,6 +12,7 @@ using StudentsManagement.Services;
 using StudentsManagement.Shared.StudentRepository;
 using StudentsManagement.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,24 +27,22 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
-builder.Services.AddControllers(); // Thêm dịch vụ cho Controller
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-//    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-//})
-//    .AddIdentityCookies();
+builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 1024 * 1024 * 15; // Max 15MB
+});
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
@@ -59,6 +58,16 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IBookIssuanceRepository, BookIssuanceRepository>();
 builder.Services.AddScoped<IAcademicYearRepository, AcademicYearRepository>();
 builder.Services.AddScoped<SystemCodeDetailService>();
+builder.Services.AddScoped<SystemCodeDetailRepository>();
+builder.Services.AddScoped<UserRepository>();
+
+
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
+
+// Đăng ký RoleManager
+builder.Services.AddScoped<RoleManager<ApplicationRole>>();
 
 builder.Services.AddScoped(http => new HttpClient
 {
@@ -116,6 +125,7 @@ app.UseCookiePolicy();
 app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseCors();
+app.UseCors("AllowAll");
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()

@@ -12,8 +12,6 @@ namespace StudentsManagement.Data
         public int GenderId { get; set; }
         public SystemCodeDetail Gender {  get; set; }
         public string FullName => $"{FirstName} {MiddleName} {LastName}";
-        public string RoleId { get; set; }
-        public ApplicationRole Role { get; set; }
         public bool IsActive { get; set; }
         public DateTime? DeactivatedOn {  get; set; }
         public DateTime LastActivityDate { get; set; }
