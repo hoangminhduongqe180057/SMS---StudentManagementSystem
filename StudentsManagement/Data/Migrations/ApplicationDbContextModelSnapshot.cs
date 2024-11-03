@@ -247,9 +247,12 @@ namespace StudentsManagement.Migrations
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<< HEAD
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(max)");
 
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -984,6 +987,20 @@ namespace StudentsManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("Gender");
+<<<<<<< HEAD
+=======
+                });
+
+            modelBuilder.Entity("StudentsManagement.Shared.Models.AcademicYears", b =>
+                {
+                    b.HasOne("StudentsManagement.Shared.Models.SystemCodeDetail", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Status");
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                 });
 
             modelBuilder.Entity("StudentsManagement.Shared.Models.Book", b =>

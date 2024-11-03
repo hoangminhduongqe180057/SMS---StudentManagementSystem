@@ -18,6 +18,7 @@ namespace StudentsManagement.Controllers
             _userRepository = userRepository;
         }
 
+<<<<<<< HEAD
         [HttpGet]
         public async Task<ActionResult<PaginationModel<ApplicationUser>>> GetAllUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
@@ -48,6 +49,27 @@ namespace StudentsManagement.Controllers
         //    }
         //    return Ok(user);
         //}
+=======
+        // GET: api/user
+        [HttpGet]
+        public async Task<ActionResult<List<ApplicationUser>>> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllAsync();
+            return Ok(users);
+        }
+
+        // GET: api/user/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ApplicationUser>> GetUserById(string id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 
         // PUT: api/user/{id}
         [HttpPut("{id}")]
@@ -79,6 +101,7 @@ namespace StudentsManagement.Controllers
 
             return NoContent();
         }
+<<<<<<< HEAD
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ApplicationUserDto>> GetUserById(string id)
@@ -107,6 +130,8 @@ namespace StudentsManagement.Controllers
             public string UserName { get; set; }
             public string Email { get; set; }
         }
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
     }
 }
 

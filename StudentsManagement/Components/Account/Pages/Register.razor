@@ -8,16 +8,23 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using StudentsManagement.Client.Services
 @using StudentsManagement.Data
+<<<<<<< HEAD
 @using StudentsManagement.Utilities
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 @using StudentsManagement.Services
 @using StudentsManagement.Shared.Models
 @using Microsoft.EntityFrameworkCore
 @using StudentsManagement.Components.Layout
+<<<<<<< HEAD
 @using System.Text.Json
 @using System.Net.Http.Headers
 
 @inject HttpClient HttpClient
 @inject IEmailSender EmailSender
+=======
+
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 @inject NavigationManager navigation;
 @inject IConfiguration config
 @inject UserManager<ApplicationUser> UserManager
@@ -28,6 +35,7 @@
 @inject IdentityRedirectManager RedirectManager
 @inject SystemCodeDetailService SystemCodeDetailService
 @inject ApplicationDbContext _context
+<<<<<<< HEAD
 @inject RoleManager<ApplicationRole> roleManager
 @inject SystemCodeDetailRepository systemCodeDetailRepository
  @rendermode @(new InteractiveServerRenderMode(prerender: false))  
@@ -58,34 +66,83 @@
                                 <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
                                     <DataAnnotationsValidator />
                                     @* <ValidationSummary class="text-danger" role="alert" /> *@
+=======
+<!--  UserManager<ApplicationUser> _userManager -->
+@inject RoleManager<ApplicationRole> roleManager
+@inject SystemCodeDetailRepository systemCodeDetailRepository
+
+<section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card card-registration my-4">
+                    <div class="row g-0">
+                        <div class="col-xl-6 d-none d-xl-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                 alt="Sample photo" class="img-fluid"
+                                 style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card-body p-md-5 text-black">
+                                <h3 class="mb-5 text-uppercase text-dark">Administrator registration form</h3>
+
+                                @if (!string.IsNullOrEmpty(Message))
+                                {
+                                    <StatusMessage Message="@Message" />
+                                }
+
+                                <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
+                                    <DataAnnotationsValidator />
+                                    <ValidationSummary class="text-danger" role="alert" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 
                                     <div class="row">
                                         <div class="col-md-4 mb-4">
                                             <div class="form-outline">
+<<<<<<< HEAD
                                                 <label class="form-label" for="FirstName">First Name</label>
                                                 <InputText @bind-Value="Input.FirstName" id="FirstName" class="form-control form-control-lg" />
+=======
+                                                <label class="form-label" for="form3Example1m">First Name</label>
+                                                <InputText @bind-Value="Input.FirstName" id="form3Example1m" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                                 <ValidationMessage For="() => Input.FirstName" class="text-danger" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-4">
                                             <div class="form-outline">
+<<<<<<< HEAD
                                                 <label class="form-label" for="MiddleName">Middle Name</label>
                                                 <InputText @bind-Value="Input.MiddleName" id="MiddleName" class="form-control form-control-lg" />
+=======
+                                                <label class="form-label" for="form3Example1n">Middle Name</label>
+                                                <InputText @bind-Value="Input.MiddleName" id="form3Example1n" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                                 <ValidationMessage For="() => Input.MiddleName" class="text-danger" />
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-4">
                                             <div class="form-outline">
+<<<<<<< HEAD
                                                 <label class="form-label" for="LastName">Last Name</label>
                                                 <InputText @bind-Value="Input.LastName" id="LastName" class="form-control form-control-lg" />
+=======
+                                                <label class="form-label" for="form3Example1n">Last Name</label>
+                                                <InputText @bind-Value="Input.LastName" id="form3Example1n" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                                 <ValidationMessage For="() => Input.LastName" class="text-danger" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="form-outline mb-4">
+<<<<<<< HEAD
                                         <label class="form-label" for="PhoneNumber">Phone Number</label>
                                         <InputText @bind-Value="Input.PhoneNumber" id="PhoneNumber" class="form-control form-control-lg" />
+=======
+                                        <label class="form-label" for="form3Example8">Phone Number</label>
+                                        <InputText @bind-Value="Input.PhoneNumber" id="form3Example8" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                         <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
                                     </div>
 
@@ -123,31 +180,55 @@
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="Photo">Photo</label>
+<<<<<<< HEAD
                                         <InputFile OnChange="LoadUpLoadFile" accept=".jpg,.png,.jpeg" class="form-control form-control-lg" />
+=======
+                                        <InputFile OnChange="@LoadUpLoadFile" accept=".jpg,.png,.jpeg" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                         <ValidationMessage For="() => Input.Photo" class="text-danger" />
                                     </div>
 
                                     <div class="form-outline mb-4">
+<<<<<<< HEAD
                                         <label class="form-label" for="Email">Email</label>
                                         <InputText type="Email" @bind-Value="Input.Email" id="Email" class="form-control form-control-lg" />
+=======
+                                        <label class="form-label" for="form3Example90">Email</label>
+                                        <InputText type="Email" @bind-Value="Input.Email" id="form3Example90" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                         <ValidationMessage For="() => Input.Email" class="text-danger" />
                                     </div>
 
                                     <div class="form-outline mb-4">
+<<<<<<< HEAD
                                         <label class="form-label" for="Password">Password</label>
                                         <InputText type="password" @bind-Value="Input.Password" id="Password" class="form-control form-control-lg" />
+=======
+                                        <label class="form-label" for="form3Example99">Password</label>
+                                        <InputText type="password" @bind-Value="Input.Password" id="form3Example99" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                         <ValidationMessage For="() => Input.Password" class="text-danger" />
                                     </div>
 
                                     <div class="form-outline mb-4">
+<<<<<<< HEAD
                                         <label class="form-label" for="ConfirmPassword">Confirm Password</label>
                                         <InputText type="password" @bind-Value="Input.ConfirmPassword" id="ConfirmPassword" class="form-control form-control-lg" />
+=======
+                                        <label class="form-label" for="form3Example97">Confirm Password</label>
+                                        <InputText type="password" @bind-Value="Input.ConfirmPassword" id="form3Example97" class="form-control form-control-lg" />
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                         <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
                                     </div>
 
                                     <div class="d-flex justify-content-end pt-3">
+<<<<<<< HEAD
                                         <a class="btn btn-primary btn-lg" href="Account/Login">Back To Login</a>
                                         <button type="submit" class="btn btn-warning btn-lg ms-2" style="margin-left: 10px">Submit Form</button>
+=======
+                                        <button type="button" class="btn btn-light btn-lg">Reset All</button>
+                                        <button type="submit" class="btn btn-warning btn-lg ms-2">Submit Form</button>
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                     </div>
                                 </EditForm>
                             </div>
@@ -177,6 +258,7 @@
         await Task.Yield(); // Cho phép hệ thống xử lý trước khi tiếp tục.
         var uploadedPhotoPath = await UploadFile();
 
+<<<<<<< HEAD
         // Step 2: Check if file upload was successful
         if (string.IsNullOrEmpty(uploadedPhotoPath))
         {
@@ -209,6 +291,8 @@
             ReturnUrl = "/"; // Điều hướng mặc định nếu ReturnUrl rỗng
         }
 
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         // Set basic user properties
         user.UserName = Input.Email;
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -218,11 +302,16 @@
         user.FirstName = Input.FirstName;
         user.MiddleName = Input.MiddleName;
         user.LastName = Input.LastName;
+<<<<<<< HEAD
         user.Photo = uploadedPhotoPath; // Use the uploaded photo path
+=======
+        user.Photo = await UpLoadFile();
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         user.GenderId = Input.GenderId;
         user.PhoneNumber = Input.PhoneNumber;
         user.LastActivityDate = DateTime.Now;
         user.IsActive = true;
+<<<<<<< HEAD
         user.AccountStatus = "Pending";
         user.RoleId = Input.RoleId;
         Logger.LogInformation($"Registering user with email {user.Email}");
@@ -230,6 +319,14 @@
         // Create user
         var createUserResult = await UserManager.CreateAsync(user, Input.Password);
 
+=======
+
+        Logger.LogInformation($"Registering user with email {user.Email}");
+
+        // Create user
+        var createUserResult = await UserManager.CreateAsync(user, Input.Password);
+
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         if (!createUserResult.Succeeded)
         {
             Logger.LogError($"Failed to create user {user.Email}: {string.Join(", ", createUserResult.Errors.Select(e => e.Description))}");
@@ -237,11 +334,21 @@
             return;
         }
 
+<<<<<<< HEAD
         // Lấy SystemCodeDetail dựa trên RoleId
         var systemCodeDetail = await _context.SystemCodeDetails
                                              .Where(s => s.Code == Input.RoleId || s.Id.ToString() == Input.RoleId)
                                              .FirstOrDefaultAsync();
 
+=======
+        Logger.LogInformation($"User {user.Email} created successfully.");
+
+        // Lấy SystemCodeDetail dựa trên RoleId
+        var systemCodeDetail = await _context.SystemCodeDetails
+                                             .Where(s => s.Code == Input.RoleId || s.Id.ToString() == Input.RoleId)
+                                             .FirstOrDefaultAsync();
+
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         if (systemCodeDetail != null)
         {
             Logger.LogInformation($"Found SystemCodeDetail with Id: {systemCodeDetail.Id} and Code: {systemCodeDetail.Code}");
@@ -284,6 +391,7 @@
             Logger.LogWarning($"SystemCodeDetail with Code or Id {Input.RoleId} not found.");
         }
 
+<<<<<<< HEAD
         var adminEmail = config["EmailSettings:AdminEmail"]; // Email của admin tổng từ cấu hình
         var subject = "New Registration Pending Approval";
         var message = $@"
@@ -322,6 +430,8 @@
 
 
 
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         // Continue with email confirmation
         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -345,6 +455,7 @@
 
         if (UserManager.Options.SignIn.RequireConfirmedAccount)
         {
+<<<<<<< HEAD
             NavigationManager.NavigateTo($"/Account/RegisterConfirmation?email={Input.Email}&returnUrl={ReturnUrl}");
 
             return;
@@ -352,6 +463,9 @@
         else
         {
             NavigationManager.NavigateTo(ReturnUrl ?? "/");
+=======
+            RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         }
 
         // await SignInManager.SignInAsync(user, isPersistent: false); // vừa comment (6)
@@ -359,6 +473,7 @@
         NavigationManager.NavigateTo(ReturnUrl ?? "/");
     }
 
+<<<<<<< HEAD
     private async Task<string> UploadFile()
     {
         if (file != null)
@@ -403,6 +518,36 @@
     }
 
 
+=======
+    public IBrowserFile? file;
+    private async Task LoadUpLoadFile(InputFileChangeEventArgs erg)
+    {
+        file = erg.File;
+    }
+
+    private async Task<string> UpLoadFile()
+    {
+        if (file is null)
+        {
+            return string.Empty;
+        }
+        else
+        {
+            string filename = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(file.Name));
+            string path = Path.Combine(config.GetValue<String>("FileUploads")!, "user", filename);
+
+            string relativepath = Path.Combine("user", filename);
+
+            Directory.CreateDirectory(Path.Combine(config.GetValue<string>("FileUploads")!, "user"));
+
+            await using FileStream filestream = new(path, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(filestream);
+            return relativepath;
+        }
+
+    }
+
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
     private ApplicationUser CreateUser()
     {
         try

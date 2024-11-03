@@ -114,6 +114,7 @@
                                 </li>
                             </ul>
                         </li>
+<<<<<<< HEAD
 
                         <li class="nav-item has-treeview @(isHostelAdminOpen ? "menu-open" : "")">
                             <a href="javascript:void(0);" class="nav-link" @onclick="ToggleHostelAdministration">
@@ -134,10 +135,62 @@
                                     <NavLink href="/hostelrooms-list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Hostel Room</p>
+=======
+                        <li class="nav-item has-treeview @(isSystemSettingAdminOpen ? "menu-open" : "")">
+                            <a href="javascript:void(0);" class="nav-link" @onclick="ToggleSystemSettingAdministration">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    System Setting
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview @(isSystemSettingAdminOpen ? "show" : "")">
+                                <li class="nav-item">
+                                    <NavLink href="/countries-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Countries</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/systemCodes-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>System Codes</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/systemCodeDetails-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>System Code Details</p>
                                     </NavLink>
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="nav-item has-treeview @(isSystemAdminOpen ? "menu-open" : "")">
+                            <a href="javascript:void(0);" class="nav-link" @onclick="ToggleSystemAdministration">
+                                <i class="nav-icon fas fa-user-cog"></i>
+                                <p>
+                                    System Administration
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview @(isSystemAdminOpen ? "show" : "")">
+                                <li class="nav-item">
+                                    <NavLink href="/academicYears-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Academic Year</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="users-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User Management</p>
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
+<<<<<<< HEAD
 
                         <li class="nav-item has-treeview @(isComplaintAdminOpen ? "menu-open" : "")">
                             <a href="javascript:void(0);" class="nav-link" @onclick="ToggleFrontOfficeAdministration">
@@ -152,10 +205,57 @@
                                     <NavLink href="/complaints-list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Complaint</p>
+=======
+                    </Authorized>
+                </AuthorizeView>
+
+                <!-- For non-System roles, only show corresponding sections -->
+                <AuthorizeView Roles="Academic">
+                    <Authorized>
+                        <!-- Academics Dropdown for Academic role -->
+                        <li class="nav-item has-treeview @(!isAcademicsOpen ? "menu-open" : "")">
+                            <a href="javascript:void(0);" class="nav-link" @onclick="ToggleAcademics">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Academics
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview @(isAcademicsOpen ? "show" : "")">
+                                <li class="nav-item">
+                                    <NavLink href="/students-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Students</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/parents-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Parents</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/teachers-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Teachers</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/subjects-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Subjects</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/departments-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Departments</p>
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                     </NavLink>
                                 </li>
                             </ul>
                         </li>
+<<<<<<< HEAD
 
                         <li class="nav-item has-treeview @(isSystemAdminOpen ? "menu-open" : "")">
                             <a href="javascript:void(0);" class="nav-link" @onclick="ToggleSystemAdministration">
@@ -182,10 +282,44 @@
                                     <NavLink href="pending-accounts" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Pending Approval</p>
+=======
+                    </Authorized>
+                </AuthorizeView>
+
+                <AuthorizeView Roles="Library">
+                    <Authorized>
+                        <!-- Library Dropdown for Library role -->
+                        <li class="nav-item has-treeview @(!isLibraryOpen ? "menu-open" : "")">
+                            <a href="javascript:void(0);" class="nav-link" @onclick="ToggleLibrary">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Library
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview @(isLibraryOpen ? "show" : "")">
+                                <li class="nav-item">
+                                    <NavLink href="/books-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Books</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/bookIssuances-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Book Issuance History</p>
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item">
+                                    <NavLink href="/returnedBooks-list" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Returned Book History</p>
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                                     </NavLink>
                                 </li>
                             </ul>
                         </li>
+<<<<<<< HEAD
 
                         <li class="nav-item has-treeview @(isSystemSettingAdminOpen ? "menu-open" : "")">
                             <a href="javascript:void(0);" class="nav-link" @onclick="ToggleSystemSettingAdministration">
@@ -327,6 +461,8 @@
                                 </li>
                             </ul>
                         </li>
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                     </Authorized>
                 </AuthorizeView>
 
@@ -363,6 +499,7 @@
                         </li>
                     </Authorized>
                 </AuthorizeView>
+<<<<<<< HEAD
 
                 <AuthorizeView Roles="FrontOffice">
                     <Authorized>
@@ -386,6 +523,8 @@
                     </Authorized>
                 </AuthorizeView>
 
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
             </ul>
 
             <AuthorizeView>

@@ -93,8 +93,13 @@ namespace StudentsManagement.Services
                         NormalizedName = roleFromSystemCode.Code.ToUpper(),
                         Description = roleFromSystemCode.Description ?? $"Default description for {roleFromSystemCode.Code}",
                         CreatedOn = DateTime.Now,
+<<<<<<< HEAD
                         CreatedById = "747a796a-a960-43c5-a42a-3641c7782699", 
                         ReviewedById = "747a796a-a960-43c5-a42a-3641c7782699", 
+=======
+                        CreatedById = "747a796a-a960-43c5-a42a-3641c7782699", // Thay thế bằng ID của người dùng hiện tại
+                        ReviewedById = "747a796a-a960-43c5-a42a-3641c7782699", // Thay thế bằng ID của người dùng hiện tại
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
                         ConcurrencyStamp = Guid.NewGuid().ToString()
                     };
 
@@ -120,6 +125,7 @@ namespace StudentsManagement.Services
             }
         }
 
+<<<<<<< HEAD
         public async Task<PaginationModel<SystemCodeDetail>> GetPagedSystemCodeDetailsAsync(int pageNumber, int pageSize)
         {
             var totalItems = await _context.SystemCodeDetails.CountAsync();
@@ -147,6 +153,9 @@ namespace StudentsManagement.Services
                                       .ToListAsync();
             return scds.FirstOrDefault();
         }
+=======
+
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 
     }
 }

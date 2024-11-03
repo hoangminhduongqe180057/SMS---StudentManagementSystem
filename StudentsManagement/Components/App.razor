@@ -8,7 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Students Management System</title>
 
+<<<<<<< HEAD
     @if (!NavigationManager.Uri.Contains("/Account/Login") && !NavigationManager.Uri.Contains("/Account/Register"))
+=======
+    @if (!NavigationManager.Uri.Contains("/Account/Login") || !NavigationManager.Uri.Contains("/Account/Register"))
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
     {
         <base href="/" />
         <!-- Load AdminLTE styles only for non-login and non-register pages -->
@@ -624,7 +628,13 @@
 <body class="@GetBodyClass()">
     <Routes />
 
+<<<<<<< HEAD
     @if (!NavigationManager.Uri.Contains("/Account/Login") && !NavigationManager.Uri.Contains("/Account/Register"))
+=======
+    <script src="_framework/blazor.web.js"></script>
+
+    @if (!NavigationManager.Uri.Contains("/Account/Login") || !NavigationManager.Uri.Contains("/Account/Register"))
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
     {
         <!-- Load AdminLTE scripts only for non-login and non-register pages -->
         <script src="AdminLTE/plugins/jquery/jquery.min.js"></script>
@@ -862,7 +872,11 @@
             return "";
         }
 
+<<<<<<< HEAD
         // For other pages, keep the default body class
+=======
+        // For other pages, including the register page, keep the default body class
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         return "hold-transition sidebar-mini layout-fixed";
     }
 }

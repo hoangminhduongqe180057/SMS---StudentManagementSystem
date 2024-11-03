@@ -13,11 +13,14 @@ using StudentsManagement.Shared.StudentRepository;
 using StudentsManagement.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Features;
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Identity.UI.Services;
 using StudentsManagement.Utilities;
 using System.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +37,7 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
+<<<<<<< HEAD
 builder.Services.AddRazorPages(); // Thêm dòng này để đăng ký Razor Pages (1)
 builder.Services.AddServerSideBlazor()
     .AddCircuitOptions(options =>
@@ -43,6 +47,8 @@ builder.Services.AddServerSideBlazor()
         options.DisconnectedCircuitRetentionPeriod = TimeSpan.FromMinutes(10); // Adjust as needed
         options.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(10); // JS Interop call timeout
     });
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -85,6 +91,7 @@ builder.Services.AddScoped<IComplaintNoteRepository, ComplaintNoteRepository>();
 builder.Services.AddScoped<SystemCodeDetailService>();
 builder.Services.AddScoped<SystemCodeDetailRepository>();
 builder.Services.AddScoped<UserRepository>();
+<<<<<<< HEAD
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<BookService>();
@@ -97,6 +104,13 @@ builder.Services.AddTransient<IEmailSender, AuthMessageSender>();
 
 
 builder.Services.AddTransient<IEmailSender, AuthMessageSender>(); // send Email
+=======
+
+
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 
 // Đăng ký RoleManager
 builder.Services.AddScoped<RoleManager<ApplicationRole>>();
@@ -178,10 +192,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseAntiforgery();
+<<<<<<< HEAD
 
 app.UseCors("AllowAll");
 
 
+=======
+app.UseCors();
+app.UseCors("AllowAll");
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()   /*vừa commnet 31/10 (1)*/
     //.AddInteractiveWebAssemblyRenderMode()

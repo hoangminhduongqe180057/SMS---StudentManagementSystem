@@ -3,7 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using StudentsManagement.Data;
 using StudentsManagement.Shared.Models;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Security.Claims;
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
 using System.Threading.Tasks;
 namespace StudentsManagement.Services
 {
@@ -25,7 +28,10 @@ namespace StudentsManagement.Services
     .Select(user => new ApplicationUser
     {
         Id = user.Id,
+<<<<<<< HEAD
         AccountStatus = user.AccountStatus ?? "",
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
         Email = user.Email,
         PhoneNumber = user.PhoneNumber,  // Handling NULL phone number
         Photo = user.Photo ?? "default.jpg",      // Handling NULL photo
@@ -75,6 +81,7 @@ namespace StudentsManagement.Services
             }
             return IdentityResult.Failed();
         }
+<<<<<<< HEAD
 
         // Get paged users
         public async Task<PaginationModel<ApplicationUser>> GetPagedUsersAsync(int pageNumber, int pageSize)
@@ -140,5 +147,7 @@ namespace StudentsManagement.Services
         {
             return await _userManager.GetUserAsync(userPrincipal);
         }
+=======
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942
     }
 }

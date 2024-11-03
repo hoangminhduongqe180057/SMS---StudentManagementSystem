@@ -1,6 +1,11 @@
+<<<<<<< HEAD:StudentsManagement.Client/Pages/Books/ViewDetailBook.razor
 ﻿@page "/book/detail/{id:int}"
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
+=======
+﻿@page "/book/delete/{id:int}"
+@using Microsoft.AspNetCore.Authorization
+>>>>>>> eb09ee2003e1c2768d4e6149d5c48ff2e8f6a942:StudentsManagement.Client/Pages/Books/DeleteBook.razor
 @using StudentsManagement.Shared.Models
 @inject NavigationManager navigation;
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
